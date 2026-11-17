@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f0e4" />
+  <meta name="description" content="为每份心意找到有缘的人。创建房间，邀请朋友一起抽签交换礼物，不抽自己，每人恰好收到一份礼物。" />
+  <title>交换好运 · 好友礼物交换</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <button class="brand-button" id="brandButton" aria-label="返回当前房间或首页">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M7 17h26v18H7z" fill="#ead6aa" stroke="currentColor" stroke-width="1.7"/><path d="M5 12h30v8H5z" fill="#f1dfbf" stroke="currentColor" stroke-width="1.7"/><path d="M18 12h5v23h-5z" fill="currentColor"/><path d="M20 12C7 13 9 2 15 5c3 1 5 7 5 7ZM20 12c13 1 11-10 5-7-3 1-5 7-5 7Z" fill="#eebca0" stroke="currentColor" stroke-width="1.7"/><path d="M12 26h1m14 0h1M15 30q5 4 10 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+        <span><strong>交换好运<span class="brand-star">✳</span></strong><small>A LITTLE GIFT, A LOT OF JOY</small></span>
+      </button>
+      <span class="mode-pill" id="modePill">好友同乐 · 2–20 人</span>
+    </header>
+    <div id="connectionBanner" class="notice notice-warning hidden" role="status">正在重新连接这场交换局。请让房主保持页面打开，连上后再操作。</div>
+    <div id="demoBanner" class="notice hidden" role="status">这是体验房间。可以添加虚拟伙伴，试试完整的礼物交换流程。</div>
+
+    <section class="screen active" id="homeScreen">
+      <div class="home-layout">
+        <div class="home-intro">
+          <div class="home-edition"><span class="edition-dot"></span> 好友礼物交换 · 心意不重样 <span class="edition-number">VOL. 01</span></div>
+          <h1>每份心意，<br /><em>都有惊喜。</em></h1>
+          <p class="hero-description">带一份礼物，赴一场有趣的约。<br />转盘一转，找到接收你心意的那个人。</p>
+          <div class="gift-scene"><img src="assets/gift-party.svg" alt="三个系着蝴蝶结的卡通礼盒，环绕的交换箭头和写着 FOR YOU 的心意卡" /><span class="scene-caption">LITTLE GIFTS. BIG SMILES.</span></div>
+        </div>
+        <div class="entry-panel">
+          <div class="ticket-heading"><span>邀 请 函</span><span class="ticket-no">YOU’RE INVITED</span></div>
+          <div class="entry-copy"><h2>这场惊喜，等你加入。</h2><span aria-hidden="true">✳</span></div>
+          <div class="home-buttons">
+            <button class="primary-button entry-button" data-action="show-create"><span class="button-leading" aria-hidden="true">＋</span><span class="button-label">发起交换局<small>创建房间，邀请好友</small></span><span class="button-arrow" aria-hidden="true">↗</span></button>
+            <button class="secondary-button entry-button" data-action="show-join"><span class="button-leading" aria-hidden="true">⌑</span><span class="button-label">加入交换局<small>输入房间号，加入好友</small></span><span class="button-arrow" aria-hidden="true">↗</span></button>
+          </div>
+          <div class="mini-rule-list"><div><span>01</span><strong>不抽自己</strong></div><div><span>02</span><strong>每人有礼</strong></div><div><span>03</span><strong>一起揭晓</strong></div></div>
+          <button class="demo-link" id="demoButton">先试一局，看看怎么玩 <span aria-hidden="true">→</span></button>
+          <div class="ticket-bottom"><span>2–20 位朋友</span><span>每份心意，都有回应</span></div>
+        </div>
+      </div>
+      <div class="home-footnote"><span>交换礼物，也交换快乐。</span><span aria-hidden="true">✳</span><span>聚会 / 生日 / 节日 / 团建</span></div>
+    </section>
+
+    <section class="screen flow-screen" id="setupScreen">
+      <button class="back-button" data-action="go-home">← 回到入口</button>
+      <div class="setup-card paper-card">
+        <div class="card-topline"><span>GIFT EXCHANGE INVITATION</span><span>01 / 参与登记</span></div>
+        <div class="setup-header"><div><span class="eyebrow" id="setupEyebrow">LET’S GET TOGETHER</span><h2 id="setupTitle">发起一场交换局</h2></div><div class="setup-icon" id="setupIcon" aria-hidden="true">✳</div></div>
+        <p id="setupSubtitle" class="section-description">写下昵称，邀请朋友们带着心意相聚。</p>
+        <form id="setupForm">
+          <label class="field-label" for="nicknameInput"><span>怎么称呼你</span><small>YOUR NAME</small></label><input class="text-input" id="nicknameInput" maxlength="24" autocomplete="nickname" placeholder="留个昵称，大家才认得你" required />
+          <div id="codeField" class="hidden"><label class="field-label" for="codeInput"><span>朋友的房间号</span><small>ROOM CODE</small></label><input class="text-input code-input" id="codeInput" maxlength="6" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="输入 6 位房间号" /></div>
+          <p class="form-hint" id="formHint">2–20 人同玩，房主需要保持页面打开。</p><button class="primary-button full" type="submit" id="setupSubmit">创建交换房间 →</button>
+        </form>
+        <div class="paper-footer"><span>一群好友</span><i></i><span>一人一份惊喜</span></div>
+      </div>
+      <p class="page-signoff">GOOD COMPANY, GREAT LITTLE MOMENTS.</p>
+    </section>
+
+    <section class="screen flow-screen" id="lobbyScreen">
+      <div class="lobby-heading"><div><span class="eyebrow">FRIENDS MAKE IT SPECIAL</span><h2>交换心意，集合。</h2><p id="roundText" class="round-text">第 1 轮 · 等待朋友加入</p></div><button class="icon-button" id="leaveButton" aria-label="离开房间">×</button></div>
+      <div class="room-code-card"><div class="room-ticket-label"><span>房间</span><small>GIFTS<br />FOR FRIENDS</small></div><div class="room-code-body"><span class="muted-label">把这 6 位房间号发给朋友</span><strong id="roomCodeText">------</strong></div><button class="copy-button" id="copyCodeButton">复制<br />邀请 ↗</button></div>
+      <div class="share-tip" id="shareTip">朋友打开邀请，填上昵称就能加入。</div>
+      <div class="participants-card paper-card"><div class="section-heading"><h3>已加入 <span id="participantCount">0</span><small> / 20</small></h3><span class="live-dot"><i></i><span id="liveLabel">实时同步</span></span></div><div id="participantList" class="participant-list"></div><div id="emptyParticipant" class="empty-state"><span aria-hidden="true">⌑</span>惊喜还缺一位，把邀请发给朋友吧。</div></div>
+      <div class="host-panel" id="hostPanel"><div class="host-panel-copy"><span class="host-crown" aria-hidden="true">✳</span><div><strong>这场惊喜由你发起</strong><small>确认朋友都到了，再一起转动好运。</small></div></div><button class="primary-button full" id="startDrawButton" disabled>等至少 2 人加入</button><button class="ghost-button full hidden" id="demoAddButton">＋ 添加体验伙伴</button></div>
+      <div class="guest-note hidden" id="guestNote"><span aria-hidden="true">✳</span> 你已加入交换局。等房主一声招呼，一起揭晓礼物送给谁。</div>
+      <div class="lobby-rule">每人恰好送出、收到一份礼物 <span>·</span> 不会抽到自己</div>
+    </section>
+
+    <section class="screen flow-screen" id="drawScreen">
+      <div class="draw-topline"><span class="eyebrow">WHO WILL GET YOUR LITTLE GIFT?</span><button class="icon-button" id="drawLeaveButton" aria-label="离开房间">×</button></div>
+      <div class="turn-card"><div class="turn-label"><span></span> 心意正在寻找主人</div><h2 id="turnName">这一份，会是谁？</h2><p id="turnDescription">礼物送给谁？答案就在这一刻。</p></div>
+      <div class="wheel-stage"><span class="stage-spark spark-left" aria-hidden="true">✳</span><span class="stage-spark spark-right" aria-hidden="true">✧</span><div class="wheel-wrap spinning" id="wheelWrap"><div class="wheel-glow"></div><div class="wheel-orbit orbit-a"></div><div class="wheel-clip"><div class="wheel" id="wheel"><svg class="wheel-svg" id="wheelSvg" viewBox="0 0 320 320" role="img" aria-label="礼物交换抽签转盘"></svg></div></div><div class="wheel-center" id="wheelCenter"><small>送给谁</small><strong id="wheelCenterText">好运</strong></div><div class="wheel-pointer" aria-hidden="true"><span>▼</span></div></div><div class="wheel-table-edge" aria-hidden="true"></div></div>
+      <div class="reveal-countdown"><strong id="countdownText">全员转盘准备中</strong><small>每一份心意，都有专属的名字</small></div>
+      <div class="result-banner hidden" id="resultBanner" aria-live="polite"><span class="result-icon" aria-hidden="true">✳</span><div><small id="resultFrom">你的送礼对象</small><strong id="resultText">送礼对象即将揭晓</strong><span id="resultSubtext">全员一起揭晓</span></div><span class="result-ticket-edge" aria-hidden="true"></span></div>
+      <button class="secondary-button full hidden" id="nextTurnButton">查看大家的礼物交换清单 <span>→</span></button>
+      <div class="draw-progress"><div class="progress-track"><span id="progressBar"></span></div><span id="progressText">全员转盘准备中</span></div><div class="draw-rule">不抽自己 <span>·</span> 送出一份 <span>·</span> 收到一份</div>
+    </section>
+
+    <section class="screen flow-screen" id="doneScreen">
+      <div class="done-topline"><span class="eyebrow">A LITTLE GIFT FOR EVERYONE</span><span aria-hidden="true">✳</span></div>
+      <div class="done-card paper-card">
+        <div class="receipt-heading"><span>交换好运俱乐部</span><small>GIFT EXCHANGE LIST</small></div>
+        <div class="done-heading"><h2>心意已配对，<br />惊喜不重样。</h2><div class="done-stamp" aria-hidden="true">全员<br />有份<span>ALL LUCKY</span></div></div>
+        <p class="done-description">每一份礼物，都有了有缘的主人。</p><p id="doneRoundText" class="round-text"></p>
+        <div class="result-table-heading"><span>送礼的人</span><span>礼物送给谁</span></div><div id="resultList" class="result-list"></div>
+        <div class="receipt-total"><span>本轮交换</span><strong>不重样，刚刚好。<span>✓</span></strong></div>
+        <button class="primary-button full" id="restartButton">意犹未尽，再来一轮 ↻</button><p id="waitRestart" class="hidden">等房主再开一轮，原班好友继续玩。</p><button class="text-button" id="doneLeaveButton">离开，回到首页</button>
+        <div class="receipt-barcode" aria-hidden="true"></div><p class="receipt-thanks">THANKS FOR A LOVELY TIME TOGETHER.</p>
+      </div>
+    </section>
+    <footer class="site-footer"><span>交换好运 · GIFT CLUB</span><span>把小小心意，变成大大惊喜。</span></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <dialog id="leaveDialog" class="joy-dialog"><div class="dialog-emoji" aria-hidden="true">↗</div><h2 id="leaveDialogTitle">准备离开了吗？</h2><p id="leaveDialogCopy"></p><div class="dialog-actions"><button class="secondary-button" id="cancelLeaveButton">继续玩</button><button class="primary-button" id="confirmLeaveButton">确认离开</button></div></dialog>
+    <dialog id="inviteDialog" class="joy-dialog"><span class="eyebrow">A LITTLE INVITATION FOR FRIENDS</span><h2>邀请朋友交换惊喜</h2><p>长按下方文字，复制后发给朋友。</p><textarea id="inviteText" readonly aria-label="邀请链接"></textarea><form method="dialog"><button class="primary-button full">收好啦</button></form></dialog>
+    <noscript><p class="notice">请开启浏览器的 JavaScript，才能加入房间和玩转盘抽签。</p></noscript>
+  </main>
+  <script src="mqtt.min.js"></script><script src="config.js"></script><script src="core.js"></script><script src="sync.js"></script><script src="app.js"></script>
+</body>
+</html>
